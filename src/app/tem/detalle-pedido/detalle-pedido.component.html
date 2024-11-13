@@ -1,0 +1,46 @@
+<div class="grid grid-cols-12 gap-6">
+  <div class="col-span-7">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr class="text-left">
+          <th class="px-6 py-3 font-medium text-sm text-center border">Tamaño</th>
+          <th class="px-6 py-3 font-medium text-sm text-center border">Ingredientes</th>
+          <th class="px-6 py-3 font-medium text-sm text-center border">Núm. Pizzas</th>
+          <th class="px-6 py-3 font-medium text-sm text-center border">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pizza of pizzas; let i = index"
+            class="border-b hover:bg-gray-50 cursor-pointer"
+            [attr.id]="'pizza-' + pizza.id"
+            (click)="pizza.selected = !pizza.selected"
+            [ngClass]="{'bg-gray-200': pizza.selected}">
+          <td class="px-6 py-3 text-center border">{{ pizza.tamano }}</td>
+          <td class="px-6 py-3 text-center border">{{ pizza.ingredientes.join(', ') }}</td>
+          <td class="px-6 py-3 text-center border">{{ pizza.numPizzas }}</td>
+          <td class="px-6 py-3 text-center border">{{ calculateSubtotal(pizza) | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mt-4 flex space-x-4">
+      <button (click)="quitarPizzasSeleccionadas()"
+              class="flex items-center justify-center w-full bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">
+        <i class="fas fa-trash-alt mr-2"></i> Quitar
+      </button>
+      <button (click)="terminarPedido()" type="submit"
+              class="flex items-center justify-center w-full bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
+        <i class="fas fa-check-circle mr-2"></i> Terminar
+      </button>
+      <button (click)="reiniciarPedido()"
+              class="flex items-center justify-center w-full bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+        <i class="fas fa-redo-alt mr-2"></i> Nuevo
+      </button>
+    </div>
+  </div>
+
+  <div class="col-span-5 col-start-8">
+    <!-- Componente de Resumen -->
+    <app-resumen></app-resumen>
+  </div>
+</div>
